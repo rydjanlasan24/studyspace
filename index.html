@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Studyspace — Student Reviewer</title>
-<link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#2563eb">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -117,15 +115,6 @@ function downloadText(name,content){let blob=new Blob([content],{type:'text/plai
 function copyText(){navigator.clipboard.writeText($('editor').value).then(()=>toast('Copied to clipboard.')).catch(()=>toast('Clipboard access is unavailable.'))}
 async function exportDocx(){let text=$('editor').value;if(!text.trim())return;try{let {Document,Packer,Paragraph,TextRun,HeadingLevel}=docx;let children=text.split('\n').map((line,i)=>new Paragraph({children:[new TextRun({text:line||' ',bold:i===0||/^(OVERVIEW|KEY POINTS|KEY TERMS|PRACTICE QUESTIONS|SOURCE MATERIALS|STUDY REMINDER)/.test(line),size:22})],spacing:{after:120}}));let doc=new Document({sections:[{children}]});let blob=await Packer.toBlob(doc);saveBlob(blob,($('reviewTitle').value||'student-reviewer')+'.docx')}catch(e){toast('Word export could not be created.')}}
 function saveBlob(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name.replace(/[^\w .-]/g,'');a.click();URL.revokeObjectURL(a.href)}
-function exportPDF(){let text=$('editor').value;if(!text.trim())return;let w=window.open('','_blank');if(!w){toast('Allow pop-ups to export PDF.');return}w.document.write(`<html><head><title>Student Reviewer</title><style>body{font:14px Arial;line-height:1.65;padding:45px;white-space:pre-wrap;color:#222}h1{font-size:20px}</style></head><body>${esc(text)}
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js")
-      .catch(err => console.error("SW error:", err));
-  });
-}
-</script>
-</body></html>`);w.document.close();w.focus();setTimeout(()=>w.print(),400)}
+function exportPDF(){let text=$('editor').value;if(!text.trim())return;let w=window.open('','_blank');if(!w){toast('Allow pop-ups to export PDF.');return}w.document.write(`<html><head><title>Student Reviewer</title><style>body{font:14px Arial;line-height:1.65;padding:45px;white-space:pre-wrap;color:#222}h1{font-size:20px}</style></head><body>${esc(text)}</body></html>`);w.document.close();w.focus();setTimeout(()=>w.print(),400)}
 if(firebaseReady){auth.onAuthStateChanged(user=>{currentUser=user;if(user)enterApp();else{$('authScreen').style.display='grid';$('mainApp').style.display='none'}})}else{$('authScreen').style.display='grid';$('mainApp').style.display='none'}
 </script></body></html>
