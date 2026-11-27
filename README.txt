@@ -12,7 +12,8 @@ Included: Firebase email/password authentication, cloud reviewer storage, shared
 {
   "rules": {
     "users": {
-      "$uid": { ".read": "auth != null", ".write": "auth != null && auth.uid === $uid" }
+      ".read": "auth != null",
+      "$uid": { ".write": "auth != null && auth.uid === $uid" }
     },
     "presence": {
       ".read": "auth != null",
@@ -21,13 +22,14 @@ Included: Firebase email/password authentication, cloud reviewer storage, shared
     "reviewers": {
       ".read": "auth != null",
       "$reviewerId": {
-        ".write": "auth != null && ( !data.exists() || data.child('ownerId').val() === auth.uid ) && ( !newData.exists() || newData.child('ownerId').val() === auth.uid )"
+        ".write": "auth != null && ((!data.exists() && newData.child('ownerId').val() === auth.uid) || (data.exists() && data.child('ownerId').val() === auth.uid && (!newData.exists() || newData.child('ownerId').val() === auth.uid)))"
       }
     }
   }
 }
 
-7. Deploy index.html on a static host (Firebase Hosting, GitHub Pages, etc.). Firebase Authentication may require adding your deployed domain to Authentication > Settings > Authorized domains.
+7. Members page displays all registered profiles, live presence, and the number of reviewers each member created.
+8. Deploy index.html on a static host (Firebase Hosting, GitHub Pages, etc.). Firebase Authentication may require adding your deployed domain to Authentication > Settings > Authorized domains.
 
 Notes:
 - Reviewers and profile records are stored in Firebase Realtime Database, not the browser.
