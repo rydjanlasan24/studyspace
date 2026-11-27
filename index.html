@@ -67,7 +67,7 @@ let files=[], extracted=[], currentRecord=null, editId=null;
 const $=id=>document.getElementById(id);
 let currentUser=null, authMode='login', db=null, auth=null, presenceRef=null, presenceListener=null, reviewerListener=null, allCloudRecords={};
 // Replace the firebaseConfig object below with your Firebase web-app configuration.
-const firebaseConfig={apiKey:"PASTE_API_KEY",authDomain:"PASTE_AUTH_DOMAIN",databaseURL:"PASTE_DATABASE_URL",projectId:"PASTE_PROJECT_ID",storageBucket:"PASTE_STORAGE_BUCKET",messagingSenderId:"PASTE_SENDER_ID",appId:"PASTE_APP_ID"};
+const firebaseConfig={apiKey:"AIzaSyDjW2BTOk-kHCCgsiMI4iEIrQ3n93hzztU",authDomain:"studentreviewer-d3186.firebaseapp.com",databaseURL:"https://studyspace-d3186-rtdb.asia-southeast1.firebasedatabase.app",projectId:"studentreviewer-d3186",storageBucket:"studentreviewer-d3186.firebasestorage.app",messagingSenderId:"752925400622",appId:"1:752925400622:web:0a9af664c08f973495c9bf"};
 const firebaseReady= !Object.values(firebaseConfig).some(v=>String(v).startsWith('PASTE_'));
 if(firebaseReady){firebase.initializeApp(firebaseConfig);auth=firebase.auth();db=firebase.database();}
 const records=()=>currentUser?Object.values(allCloudRecords).filter(r=>r.ownerId===currentUser.uid):[];
