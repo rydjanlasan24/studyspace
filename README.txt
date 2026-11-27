@@ -28,8 +28,9 @@ Included: Firebase email/password authentication, cloud reviewer storage, shared
   }
 }
 
-7. Members page displays all registered profiles, live presence, and the number of reviewers each member created.
-8. Deploy index.html on a static host (Firebase Hosting, GitHub Pages, etc.). Firebase Authentication may require adding your deployed domain to Authentication > Settings > Authorized domains.
+7. Members page supports member search, profile photos (paste a public image URL using the Profile photo button), live presence, and reviewer counts. Clicking a member opens their reviewer list.
+8. Profile photo URLs are stored under users/<uid>/photoURL. Ensure the users rules permit authenticated reads and only each UID writes its profile.
+9. Deploy index.html on a static host (Firebase Hosting, GitHub Pages, etc.). Firebase Authentication may require adding your deployed domain to Authentication > Settings > Authorized domains.
 
 Notes:
 - Reviewers and profile records are stored in Firebase Realtime Database, not the browser.
